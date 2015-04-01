@@ -24,11 +24,14 @@ public class GamePanel extends JPanel {
 		big.clearRect(0, 0, 400, 600);
 		if(reporter.getScore() < 5000)
 		    big.setColor(Color.WHITE);	
-		else if(reporter.getScore() >= 5000 && reporter.getScore() < 10000 )
+
+		else if(reporter.getScore() >= 5000 && reporter.getScore() < 10000)
 		    big.setColor(Color.MAGENTA); 
+
 		else		   	
  			big.setColor(Color.RED);
-		big.drawString(String.format("%08d", reporter.getScore()), 300, 20);
+
+		big.drawString(String.format("%08d", reporter.getScore()), 160, 20);
 		for(Sprite s : sprites){
 			s.draw(big);
 		}
