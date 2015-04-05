@@ -8,7 +8,7 @@ public class Enemy extends Sprite{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
-	private int step = 15;
+	private int step = (int)(Math.random()*45);
 	private boolean alive = true;
 	
 	public Enemy(int x, int y, int width, int height) {

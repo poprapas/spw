@@ -20,7 +20,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	private Timer timer;
 	
 	private long score = 0;
-	private double difficulty = 0.3;
+	private double difficulty = 0.15;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -63,6 +63,8 @@ public class GameEngine implements KeyListener, GameReporter{
 				e_iter.remove();
 				gp.sprites.remove(e);
 				score += 199;
+				v.width += 1;
+				v.height += 1;
 			}
 		}
 		
@@ -86,13 +88,19 @@ public class GameEngine implements KeyListener, GameReporter{
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			v.move(-1);
+			v.move_Width(-1);
 			break;
 		case KeyEvent.VK_RIGHT:
-			v.move(1);
+			v.move_Width(1);
 			break;
 		case KeyEvent.VK_D:
 			difficulty += 0.2;
+			break;
+		case KeyEvent.VK_UP:
+			v.move_Height(-1);
+			break;
+		case KeyEvent.VK_DOWN:
+			v.move_Height(1);
 			break;
 		}
 	}
