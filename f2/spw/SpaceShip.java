@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class SpaceShip extends Sprite{
 
-	int step = 9;
+	int step = 6;
 	
 	public SpaceShip(int x, int y, int width, int height) {
 		super(x, y, width, height);

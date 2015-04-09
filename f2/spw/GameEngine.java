@@ -14,7 +14,9 @@ import javax.swing.Timer;
 public class GameEngine implements KeyListener, GameReporter{
 	GamePanel gp;
 		
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<Damage> damages = new ArrayList<Damage>();
+	private ArrayList<Gift> gifts = new ArrayList<Gift>();	
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -49,9 +51,29 @@ public class GameEngine implements KeyListener, GameReporter{
 		enemies.add(e);
 	}
 	
+	private void generateDamage(){
+		Damage d = new Damage((int)(Math.random()*350), 15, 3,(int)(Math.random()*40));
+		gp.sprites.add(d);
+		damages.add(d);
+	}
+
+	private void generateGift(){
+		Gift g = new Gift((int)(Math.random()*350), 10, 2,(int)(Math.random()*30));
+		gp.sprites.add(g);
+		gifts.add(g);
+	}
+
 	private void process(){
 		if(Math.random() < difficulty){
 			generateEnemy();
+		}
+
+		if(Math.random() < 0.05){
+			generateDamage();
+		}
+
+		if(Math.random() < 0.025){
+			generateGift();
 		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
@@ -62,12 +84,34 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(!e.isAlive()){
 				e_iter.remove();
 				gp.sprites.remove(e);
-				score += 199;
-				v.width += 1;
-				v.height += 1;
+				score += 499;
+				v.width += 0.75;
+				v.height += 0.75;
 			}
 		}
 		
+		Iterator<Damage> d_iter = damages.iterator();
+		while(d_iter.hasNext()){
+			Damage d = d_iter.next();
+			d.proceed();
+			
+			if(!d.isAlive()){
+				d_iter.remove();
+				gp.sprites.remove(d);
+			}
+		}
+
+        Iterator<Gift> g_iter = gifts.iterator();
+		while(g_iter.hasNext()){
+			Gift g = g_iter.next();
+			g.proceed();
+			
+			if(!g.isAlive()){
+				g_iter.remove();
+				gp.sprites.remove(g);
+			}
+		}
+
 		gp.updateGameUI(this);
 		
 		Rectangle2D.Double vr = v.getRectangle();
@@ -76,6 +120,24 @@ public class GameEngine implements KeyListener, GameReporter{
 			er = e.getRectangle();
 			if(er.intersects(vr)){
 				die();
+				return;
+			}
+		}
+
+		Rectangle2D.Double dr;
+		for(Damage d : damages){
+			dr = d.getRectangle();
+			if(dr.intersects(vr)){
+				score -= 199;
+				return;
+			}
+		}
+
+		Rectangle2D.Double gr;
+		for(Gift g : gifts){
+			gr = g.getRectangle();
+			if(gr.intersects(vr)){
+				score += 99;
 				return;
 			}
 		}

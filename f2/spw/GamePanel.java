@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 	public GamePanel() {
 		bi = new BufferedImage(400, 650, BufferedImage.TYPE_INT_ARGB);
 		big = (Graphics2D) bi.getGraphics();
-		big.setBackground(Color.PINK);
+		big.setBackground(Color.DARK_GRAY);
 	}
 
 	public void updateGameUI(GameReporter reporter){
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel {
 		    big.setColor(Color.MAGENTA); 
 
 		else		   	
- 			big.setColor(Color.RED);
+ 			big.setColor(Color.ORANGE);
 
 		big.drawString(String.format("%08d", reporter.getScore()), 160, 20);
 		for(Sprite s : sprites){
