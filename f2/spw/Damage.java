@@ -4,16 +4,29 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class Damage extends Sprite{
 	public static final int Y_TO_FADE = 400;
-	public static final int Y_TO_DIE = 650;
+	public static final int Y_TO_DIE = 500;
 	
+	BufferedImage b;
+
 	private int step = 5;
 	private boolean alive = true;
 	
 	public Damage(int x, int y, int width, int height) {
-		super(x, y, 13, 13);
+		super(x, y, 25, 25);
 		
+		try{
+			b = ImageIO.read(new File("f2/photo/bomb.png"));
+		}
+		catch(IOException e){
+
+		}
 	}
 
 	@Override
@@ -25,10 +38,8 @@ public class Damage extends Sprite{
 					(float)(Y_TO_DIE - y)/(Y_TO_DIE - Y_TO_FADE)));
 		}
 
-		g.setColor(Color.RED);
+		g.drawImage(b, x, y, width, height, null);
 
-		g.fillRect(x, y, width, height);
-		
 	}
 
 	public void proceed(){
