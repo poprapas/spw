@@ -10,8 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Gift extends Sprite{
-	public static final int Y_TO_FADE = 400;
-	public static final int Y_TO_DIE = 500;
+	public static final int Y_TO_FADE = 500;
+	public static final int Y_TO_DIE = 660;
 
 	BufferedImage p;
 	

@@ -46,19 +46,19 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	
 	private void generateEnemy(){
-		Enemy e = new Enemy((int)(Math.random()*350), 20, 5,(int)(Math.random()*50));
+		Enemy e = new Enemy((int)(Math.random()*500), 20, 5,(int)(Math.random()*50));
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
 	
 	private void generateDamage(){
-		Damage d = new Damage((int)(Math.random()*350), 15, 3,(int)(Math.random()*40));
+		Damage d = new Damage((int)(Math.random()*500), 15, 3,(int)(Math.random()*40));
 		gp.sprites.add(d);
 		damages.add(d);
 	}
 
 	private void generateGift(){
-		Gift g = new Gift((int)(Math.random()*350), 10, 2,(int)(Math.random()*30));
+		Gift g = new Gift((int)(Math.random()*500), 10, 2,(int)(Math.random()*30));
 		gp.sprites.add(g);
 		gifts.add(g);
 	}
@@ -163,6 +163,12 @@ public class GameEngine implements KeyListener, GameReporter{
 			break;
 		case KeyEvent.VK_DOWN:
 			v.move_Height(1);
+			break;
+		case KeyEvent.VK_S:
+			timer.stop();
+			break;
+		case KeyEvent.VK_A:
+			timer.start();
 			break;
 		}
 	}

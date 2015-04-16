@@ -10,8 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Damage extends Sprite{
-	public static final int Y_TO_FADE = 400;
-	public static final int Y_TO_DIE = 500;
+	public static final int Y_TO_FADE = 500;
+	public static final int Y_TO_DIE = 660;
 	
 	BufferedImage b;
 
@@ -19,7 +19,7 @@ public class Damage extends Sprite{
 	private boolean alive = true;
 	
 	public Damage(int x, int y, int width, int height) {
-		super(x, y, 25, 25);
+		super(x, y, 60, 70);
 		
 		try{
 			b = ImageIO.read(new File("f2/photo/bomb.png"));

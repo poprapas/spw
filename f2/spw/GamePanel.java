@@ -8,20 +8,33 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class GamePanel extends JPanel {
 	
 	private BufferedImage bi;	
 	Graphics2D big;
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
+	BufferedImage bg;
+
 	public GamePanel() {
-		bi = new BufferedImage(400, 660, BufferedImage.TYPE_INT_ARGB);
+		bi = new BufferedImage(500, 660, BufferedImage.TYPE_INT_ARGB);
+
+		try{
+			bg = ImageIO.read(new File("f2/photo/bg.gif"));
+		}
+		catch(IOException e){
+
+		}
+
 		big = (Graphics2D) bi.getGraphics();
-		big.setBackground(Color.LIGHT_GRAY);
 	}
 
 	public void updateGameUI(GameReporter reporter){
-		big.clearRect(0, 0, 400, 650);
+		big.clearRect(0, 0, 500, 650);
 		if(reporter.getScore() < 5000)
 		    big.setColor(Color.WHITE);	
 
@@ -30,6 +43,8 @@ public class GamePanel extends JPanel {
 
 		else		   	
  			big.setColor(Color.ORANGE);
+
+ 		big.drawImage(bg, 0, 0, 500, 660, null);
 
 		big.drawString(String.format("%08d", reporter.getScore()), 160, 20);
 		for(Sprite s : sprites){
