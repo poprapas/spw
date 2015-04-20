@@ -54,4 +54,8 @@ public class Gift extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
+	
+	public void disappear(){
+		alive = false;
+	}
 }

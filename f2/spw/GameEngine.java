@@ -24,6 +24,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	private long score = 0;
 	private double difficulty = 0.15;
 	
+	private int extraLive = 0;
+
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
 		this.v = v;		
@@ -75,6 +77,15 @@ public class GameEngine implements KeyListener, GameReporter{
 		if(Math.random() < 0.025){
 			generateGift();
 		}
+
+		if(score >= 3000 && score < 4000){
+			extraLive += 1;
+			score = 4000;
+		}
+		else if(score >= 10000 && score < 11000){
+			extraLive += 1;
+			score = 11000;
+		}
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
 		while(e_iter.hasNext()){
@@ -119,7 +130,12 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
-				die();
+				if(extraLive >= 0){
+					extraLive -= 1;
+				}
+				else if(extraLive < 0){
+					die();
+				}
 				return;
 			}
 		}
@@ -129,6 +145,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			dr = d.getRectangle();
 			if(dr.intersects(vr)){
 				score -= 199;
+				d.disappear();
 				return;
 			}
 		}
@@ -138,6 +155,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			gr = g.getRectangle();
 			if(gr.intersects(vr)){
 				score += 99;
+				g.disappear();
 				return;
 			}
 		}
@@ -175,6 +193,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+
+	public int getExtraLive(){
+		return extraLive;
 	}
 	
 	@Override

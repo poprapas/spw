@@ -46,7 +46,15 @@ public class GamePanel extends JPanel {
 
  		big.drawImage(bg, 0, 0, 500, 660, null);
 
-		big.drawString(String.format("%08d", reporter.getScore()), 160, 20);
+		big.drawString(String.format("%08d", reporter.getScore()), 200, 20);
+
+		if(reporter.getExtraLive() >= 0){
+			big.drawString(String.format("%d", reporter.getExtraLive()), 20, 20);
+		}
+		else if(reporter.getExtraLive() < 0){
+			big.drawString(String.format("%s", "GAME OVER"), 20, 20);
+		}
+
 		for(Sprite s : sprites){
 			s.draw(big);
 		}
