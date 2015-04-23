@@ -17,14 +17,16 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Damage> damages = new ArrayList<Damage>();
 	private ArrayList<Gift> gifts = new ArrayList<Gift>();	
+	private ArrayList<Fish> fishs = new ArrayList<Fish>();
 	private SpaceShip v;	
 	
 	private Timer timer;
 	
 	private long score = 0;
-	private double difficulty = 0.15;
+	private double difficulty = 0.12;
 	
 	private int extraLive = 0;
+	private int fishNum = 0;
 
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -65,6 +67,12 @@ public class GameEngine implements KeyListener, GameReporter{
 		gifts.add(g);
 	}
 
+	private void generateFish(){
+		Fish f = new Fish(500, (int)(Math.random()*660), 60, 40);
+		gp.sprites.add(f);
+		fishs.add(f);
+	}
+
 	private void process(){
 		if(Math.random() < difficulty){
 			generateEnemy();
@@ -76,6 +84,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 		if(Math.random() < 0.025){
 			generateGift();
+		}
+
+		if(Math.random() < 0.03){
+			generateFish();
 		}
 
 		if(score >= 3000 && score < 4000){
@@ -123,6 +135,17 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 		}
 
+        Iterator<Fish> f_iter = fishs.iterator();
+		while(f_iter.hasNext()){
+			Fish f = f_iter.next();
+			f.proceed();
+			
+			if(!f.isAlive()){
+				f_iter.remove();
+				gp.sprites.remove(f);
+			}
+		}
+
 		gp.updateGameUI(this);
 		
 		Rectangle2D.Double vr = v.getRectangle();
@@ -154,8 +177,30 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Gift g : gifts){
 			gr = g.getRectangle();
 			if(gr.intersects(vr)){
-				score += 99;
+				score += 599;
 				g.disappear();
+				return;
+			}
+		}
+
+		Rectangle2D.Double fr;
+		for(Fish f : fishs){
+			fr = f.getRectangle();
+			if(fr.intersects(vr)){
+				f.disappear();
+				fishNum += 1;
+				if(fishNum == 3){
+					wait(3000);
+				}
+				else if(fishNum == 6){
+					wait(5000);
+				}
+				else if (fishNum == 9){
+					extraLive = -1;
+					gp.updateGameUI(this);
+					die();
+				}
+
 				return;
 			}
 		}
@@ -213,5 +258,14 @@ public class GameEngine implements KeyListener, GameReporter{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		//do nothing		
+	}
+
+	private static void wait(int msec){
+		try{
+			Thread.sleep(msec);
+		}
+		catch(Exception e){
+
+		}
 	}
 }
