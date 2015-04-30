@@ -16,7 +16,7 @@ public class Fish extends Sprite{
 	BufferedImage f;
 	
 	
-	private int step = 3;
+	private int step = 4;
 	private boolean alive = true;
 	
 	public Fish(int x, int y, int width, int height) {
